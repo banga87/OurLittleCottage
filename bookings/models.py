@@ -12,19 +12,19 @@ class Guest(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-class Property(models.Model):
-    title = models.CharField(max_length=255)
-    beds = models.IntegerField()
-    owner = models.ForeignKey(Guest, on_delete=models.PROTECT)
-    last_update = models.DateTimeField(auto_now=True)
-
-
 class Address(models.Model):
     street_number = models.CharField(max_length=255)
     street = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+
+
+class Property(models.Model):
+    title = models.CharField(max_length=255)
+    beds = models.IntegerField()
+    owner = models.ForeignKey(Guest, on_delete=models.PROTECT)
+    last_update = models.DateTimeField(auto_now=True)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, default=None)
 
 
 # COME BACK TO THIS!
