@@ -8,13 +8,13 @@ class Guest(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     phone = models.CharField(max_length=255)
-    propert_owner = models.BooleanField()
+    property_owner = models.BooleanField()
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class Property(models.Model):
     title = models.CharField(max_length=255)
-    beds = models.IntegerField(max_length=500)
+    beds = models.IntegerField()
     owner = models.ForeignKey(Guest, on_delete=models.PROTECT)
     last_update = models.DateTimeField(auto_now=True)
 

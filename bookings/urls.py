@@ -1,6 +1,9 @@
 from django.urls import path
+from rest_framework_nested import routers
 from . import views
 
-urlpatterns = [
-    path('hello/', views.hello_world)
-]
+router = routers.DefaultRouter()
+
+router.register('guests', views.GuestViewSet, basename='guests')
+
+urlpatterns = router.urls
