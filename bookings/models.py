@@ -14,11 +14,13 @@ class Contact(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
     
     # Pulls "first_name" from User AUTH_USER_MODEL found in core.models.py
+    # Adds ability to sort by first_name in admin panel
     @admin.display(ordering='user__first_name')
     def first_name(self):
         return self.user.first_name
     
     # Pulls "last_name" from User AUTH_USER_MODEL found in core.models.py
+    # Adds ability to sort by last_name in admin panel
     @admin.display(ordering='user__last_name')
     def last_name(self):
         return self.user.last_name
@@ -79,7 +81,7 @@ class Cart(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     duration = models.DurationField(null=True, blank=True)
-    
+
     # Override save() method of models.Model to calculate and save the duration field
     def save(self, *args, **kwargs):
         self.duration = self.end_date - self.start_date
