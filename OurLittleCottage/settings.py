@@ -155,6 +155,7 @@ SIMPLE_JWT = {
 # We have overriden just 1 serializer in core/serializers.py and added here.
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'core.serializers.UserCreateSerializer'
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer'
         }
     }

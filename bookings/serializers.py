@@ -3,9 +3,11 @@ from .models import Contact, Property, Booking, Cart
 
 
 class ContactSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+
     class Meta:
         model = Contact
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'user']
+        fields = ['id', 'user_id',  'email', 'phone']
 
 
 class PropertySerializer(serializers.ModelSerializer):
