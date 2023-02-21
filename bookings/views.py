@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet
-from .models import Guest, Property, Booking, Cart  
-from .serializers import GuestSerializer, PropertySerializer, BookingSerializer, CartSerializer
+from .models import Contact, Property, Booking, Cart  
+from .serializers import ContactSerializer, PropertySerializer, BookingSerializer, CartSerializer
 
 # Create your views here.
 
-class GuestViewSet(ModelViewSet):
-    queryset = Guest.objects.all()
-    serializer_class = GuestSerializer
+class ContactViewSet(ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
 
 
 class PropertyViewSet(ModelViewSet):
