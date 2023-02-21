@@ -15,6 +15,8 @@ class PropertyForm(forms.ModelForm):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'email', 'phone', 'user']
     list_per_page = 20
+    list_select_related = ['user']
+    ordering = ['user__first_name', 'user__last_name']
     
 
 @admin.register(Property)

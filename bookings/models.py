@@ -1,18 +1,30 @@
 from django.db import models
 from django.conf import settings
+from django.contrib import admin
 import datetime
 
 # Create your models here.
 
 class Contact(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=255, default=None, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+    
+    # Pulls "first_name" from User AUTH_USER_MODEL found in core.models.py
+    @admin.display(ordering='user__first_name')
+    def first_name(self):
+        return self.user.first_name
+    
+    # Pulls "last_name" from User AUTH_USER_MODEL found in core.models.py
+    @admin.display(ordering='user__last_name')
+    def last_name(self):
+        return self.user.last_name
+    
+    class Meta:
+        ordering = ['user__first_name', 'user__last_name']
 
 
 class Address(models.Model):
@@ -52,6 +64,7 @@ class Booking(models.Model):
     duration = models.DurationField(null=True, blank=True)
     booking_status = models.CharField(max_length=1, choices=BOOKING_STATUS_CHOICES, default=BOOKING_STATUS_PENDING)
 
+    # Override save() method of models.Model to calculate and save the duration field
     def save(self, *args, **kwargs):
         self.duration = self.end_date - self.start_date
         super().save(*args, **kwargs)
@@ -66,7 +79,8 @@ class Cart(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     duration = models.DurationField(null=True, blank=True)
-
+    
+    # Override save() method of models.Model to calculate and save the duration field
     def save(self, *args, **kwargs):
         self.duration = self.end_date - self.start_date
         super().save(*args, **kwargs)
