@@ -12,7 +12,7 @@ class ContactViewSet(ModelViewSet):
 
 
 class PropertyViewSet(ModelViewSet):
-    queryset = Property.objects.prefetch_related('address').all()
+    queryset = Property.objects.all()
     serializer_class = PropertySerializer
 
 
