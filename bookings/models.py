@@ -7,7 +7,7 @@ import datetime
 
 class Contact(models.Model):
     email = models.EmailField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, default=None, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
