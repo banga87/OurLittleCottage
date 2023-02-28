@@ -8,7 +8,7 @@ router.register('contacts', views.ContactViewSet, basename='contacts')
 router.register('properties', views.PropertyViewSet)
 router.register('bookings', views.BookingViewSet)
 router.register('carts', views.CartViewSet)
-router.register('family-homes', views.OwnerPropertyViewSet, basename='family-homes')
+router.register('family-homes', views.FamilyHomesViewSet, basename='family-homes')
 router.register('holiday-homes', views.GuestPropertyViewSet, basename='holiday-homes')
 
 urlpatterns = router.urls

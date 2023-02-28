@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Contact, Property, Booking, Cart, Address
-from .serializers import ContactSerializer, PropertySerializer, BookingSerializer, CartSerializer, AddressSerializer
+from .serializers import ContactSerializer, PropertySerializer, BookingSerializer, CartSerializer, AddressSerializer, GuestSerializer
 
 # Create your views here.
 
@@ -24,10 +24,10 @@ class ContactViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data)
         
+        
 class AddressViewSet(ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-
     http_method_names = ['get']
 
 
@@ -46,8 +46,13 @@ class CartViewSet(ModelViewSet):
     serializer_class = CartSerializer
 
 
+class GuestViewSet(ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = GuestSerializer
+
+
 # Class used for /my-properties URL to view 'my properties'
-class OwnerPropertyViewSet(PropertyViewSet):
+class FamilyHomesViewSet(PropertyViewSet):
     # Overriding get_queryset to return a list of properties based on the user logged in.
     def get_queryset(self):
         user = self.request.user

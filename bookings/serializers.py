@@ -16,12 +16,23 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = ['street_number', 'street', 'state', 'country']
 
 
+class GuestSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_name')
+    def get_name(self, guest):
+        return guest.__str__()
+    
+    class Meta:
+        model = Contact
+        fields = ['id', 'name']
+
+
 class PropertySerializer(serializers.ModelSerializer):
     address = AddressSerializer(many=False, read_only=True)
+    guests = GuestSerializer(many=True, read_only=True, source='guest')
     
     class Meta:
         model = Property
-        fields = ['id', 'title', 'beds', 'owner', 'guest', 'last_update', 'address']
+        fields = ['id', 'title', 'beds', 'owner', 'guests', 'last_update', 'address']
 
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -34,3 +45,7 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ['id', 'created_at', 'property', 'guest', 'guest_quantity', 'start_date', 'end_date', 'duration']
+
+
+
+
