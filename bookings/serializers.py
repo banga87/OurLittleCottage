@@ -21,7 +21,7 @@ class PropertySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Property
-        fields = ['id', 'title', 'beds', 'owner', 'last_update', 'address']
+        fields = ['id', 'title', 'beds', 'owner', 'guest', 'last_update', 'address']
 
 
 class BookingSerializer(serializers.ModelSerializer):

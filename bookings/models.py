@@ -33,7 +33,7 @@ class Property(models.Model):
     title = models.CharField(max_length=255)
     beds = models.IntegerField(null=True, blank=True)
     owner = models.ForeignKey(Contact, on_delete=models.PROTECT, null=True, blank=True, related_name='owner')
-    guest = models.ForeignKey(Contact, on_delete=models.PROTECT, null=True, blank=True, related_name='guest')
+    guest = models.ManyToManyField(Contact, null=True, blank=True, related_name='guest')
     last_update = models.DateTimeField(auto_now=True)
 
     def __str__(self):
