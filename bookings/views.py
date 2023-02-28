@@ -46,10 +46,21 @@ class CartViewSet(ModelViewSet):
     serializer_class = CartSerializer
 
 
+# Class used for /my-properties URL to view 'my properties'
 class OwnerPropertyViewSet(PropertyViewSet):
+    # Overriding get_queryset to return a list of properties based on the user logged in.
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
             return Property.objects.filter(owner=user.contact)
+        else:
+            return Property.objects.none()
+        
+    
+class GuestPropertyViewSet(PropertyViewSet):
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return Property.objects.filter(guest=user.contact)
         else:
             return Property.objects.none()

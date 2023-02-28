@@ -5,6 +5,7 @@ from django import forms
 # Register your models here.
 class PropertyForm(forms.ModelForm):
     owner = forms.ModelChoiceField(queryset=Contact.objects.all())
+    guest = forms.ModelChoiceField(queryset=Contact.objects.all())
 
     class Meta:
         model = Property
@@ -21,7 +22,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
-    list_display = ['title', 'beds', 'owner', 'address']
+    list_display = ['title', 'beds', 'owner', 'guest']
     form = PropertyForm
 
 
