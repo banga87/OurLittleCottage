@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from .models import Contact, Property, Booking, Cart  
-from .serializers import ContactSerializer, PropertySerializer, BookingSerializer, CartSerializer
+from .models import Contact, Property, Booking, Cart, Address
+from .serializers import ContactSerializer, PropertySerializer, BookingSerializer, CartSerializer, AddressSerializer
 
 # Create your views here.
 
@@ -23,10 +23,16 @@ class ContactViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+        
+class AddressViewSet(ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+    http_method_names = ['get']
 
 
 class PropertyViewSet(ModelViewSet):
-    queryset = Property.objects.all()
+    queryset = Property.objects.prefetch_related('address').all()
     serializer_class = PropertySerializer
 
 
@@ -38,3 +44,12 @@ class BookingViewSet(ModelViewSet):
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+
+class OwnerPropertyViewSet(PropertyViewSet):
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return Property.objects.filter(owner=user.contact)
+        else:
+            return Property.objects.none()

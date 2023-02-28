@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Contact, Property, Booking, Cart
+from .models import Contact, Property, Booking, Cart, Address
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -10,7 +10,15 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = ['id', 'user_id',  'email', 'phone']
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['street_number', 'street', 'state', 'country']
+
+
 class PropertySerializer(serializers.ModelSerializer):
+    address = AddressSerializer(many=False, read_only=True)
+    
     class Meta:
         model = Property
         fields = ['id', 'title', 'beds', 'owner', 'last_update', 'address']

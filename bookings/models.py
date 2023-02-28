@@ -7,7 +7,7 @@ import datetime
 
 class Contact(models.Model):
     email = models.EmailField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=False, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -29,22 +29,22 @@ class Contact(models.Model):
         ordering = ['user__first_name', 'user__last_name']
 
 
-class Address(models.Model):
-    street_number = models.CharField(max_length=255, null=True, blank=True)
-    street = models.CharField(max_length=255, null=True, blank=True)
-    state = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, blank=True)
-
-
 class Property(models.Model):
     title = models.CharField(max_length=255)
     beds = models.IntegerField(null=True, blank=True)
     owner = models.ForeignKey(Contact, on_delete=models.PROTECT, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE,null=True, blank=True)
 
     def __str__(self):
         return self.title
+
+
+class Address(models.Model):
+    street_number = models.CharField(max_length=255, null=True, blank=True)
+    street = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    property = models.ForeignKey(Property, on_delete=models.PROTECT, null=True, blank=True, related_name='address')
 
 
 class Booking(models.Model):
