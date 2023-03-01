@@ -25,15 +25,5 @@ class PropertyAdmin(admin.ModelAdmin):
     form = PropertyForm
 
     def get_guests(self, property):
-        return ", ".join([guest.__str__() for guest in property.guest.all()])
+        return ", ".join([guest.__str__() for guest in property.guests.all()])
     get_guests.short_description = 'guests'
-
-
-@admin.register(Booking)
-class BookingAdmin(admin.ModelAdmin):
-    list_display = ['property', 'guest', 'guest_quantity', 'host', 'start_date', 'end_date', 'duration', 'booking_status']
-
-
-@admin.register(Cart)
-class ContactAdmin(admin.ModelAdmin):
-    list_display = ['property', 'guest', 'guest_quantity', 'host', 'start_date', 'end_date', 'duration']
