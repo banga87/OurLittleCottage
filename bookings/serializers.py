@@ -36,8 +36,13 @@ class AddressSerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     guests = GuestSerializer(many=True)
     owner = OwnerSerializer(many=False)
-    address = AddressSerializer(many=False)
+    address = AddressSerializer(many=False, read_only=True)
 
     class Meta:
         model = Property
         fields = ['id', 'title', 'beds', 'owner', 'guests', 'address']
+
+
+# Adds a Guest to a Property
+class AddGuestSerializer(serializers.ModelSerializer):
+    pass

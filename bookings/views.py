@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Contact, Property, Address
-from .serializers import ContactSerializer, PropertySerializer, AddressSerializer, GuestSerializer, OwnerSerializer
+from .serializers import ContactSerializer, PropertySerializer, AddressSerializer, AddGuestSerializer, GuestSerializer
 
 # Create your views here.
 
@@ -32,3 +32,18 @@ class PropertyViewSet(ModelViewSet):
     #         return Property.objects.filter(owner=user.contact)
     #     else:
     #         return Property.objects.none()
+
+class PropertyGuestViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            pass
+        return GuestSerializer
+    
+    def get_serializer_context(self):
+        return {'property_id': self.kwargs['property_pk']}
+    
+    def get_queryset(self):
+        property = get_object_or_404(Property, pk=self.kwargs['property_pk'])
+        return property.guests.all()

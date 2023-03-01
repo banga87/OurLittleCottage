@@ -7,4 +7,7 @@ router = routers.DefaultRouter()
 router.register('contacts', views.ContactViewSet, basename='contacts')
 router.register('properties', views.PropertyViewSet)
 
-urlpatterns = router.urls
+properties_router = routers.NestedDefaultRouter(router, 'properties', lookup='property')
+properties_router.register('guests', views.PropertyGuestViewSet, basename='property-guests')
+
+urlpatterns = router.urls + properties_router.urls
