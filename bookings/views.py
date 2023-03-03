@@ -38,7 +38,7 @@ class PropertyGuestViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            pass
+            GuestSerializer
         return GuestSerializer
     
     def get_serializer_context(self):

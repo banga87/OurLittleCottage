@@ -6,9 +6,9 @@ import datetime
 # Create your models here.
 
 class Contact(models.Model):
-    email = models.EmailField(max_length=255, null=True, blank=True)
+    email = models.EmailField(max_length=255, null=True, unique=True)
     phone = models.CharField(max_length=255, null=False, blank=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
